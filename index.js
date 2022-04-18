@@ -37,15 +37,15 @@ function parseData(file, data) {
     let line = 1
     let csv = `"sentence number","sentiment","text"`
     sentences.forEach(sentence => {
-        line++
         let score = sentiment(sentence).score
         let words = `${sentence}`
-        let csvline = `\n"${line}","${score}","${words}"`
-
+        let csvline = `\n"${line}","${score}","${utils.string.removePunctuations(words)}"`
         csv += csvline
+        line++
     })
 
-    fs.writeFileSync(path.join(outputPath, `${file}.csv`), csv, {
+    let csvPath = path.join(outputPath, `${file}.csv`)
+    fs.writeFileSync(csvPath, csv, {
         encoding: 'utf8',
         flag: 'w'
     })
